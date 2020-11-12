@@ -24,6 +24,20 @@ let minutesAway = 0;
 let newRow = {};
 let newTrain = {};
 
+// Time conversions
+let doMath = function () {
+
+    let firstDepartureConverted = moment(firstDeparture, "HH:mm").subtract(1, "years");
+    //difference between the times
+    let diffTime = moment().diff(moment(firstDepartureConverted), "minutes");
+    //Time apart (remainder)
+    let remainder = diffTime % frequency;
+    //minutes until train arrival
+    minutesAway = frequency - remainder;
+    //next train
+    arrivalTime = moment().add(minutesAway, "minutes");
+};
+
 // Capture Button Click
 $("#submitbtn").on("click", function (event) {
     event.preventDefault();
@@ -64,21 +78,3 @@ $("#submitbtn").on("click", function (event) {
     $("#trainList").append(newRow);
 
 });
-
-
-let doMath = function () {
-
-    let firstDepartureConverted = moment(firstDeparture, "HH:mm").subtract(1, "years");
-
-    //difference between the times
-    let diffTime = moment().diff(moment(firstDepartureConverted), "minutes");
-
-    //Time apart (remainder)
-    let remainder = diffTime % frequency;
-
-    //minutes until train arrival
-    minutesAway = frequency - remainder;
-
-    //next train
-    arrivalTime = moment().add(minutesAway, "minutes");
-};
